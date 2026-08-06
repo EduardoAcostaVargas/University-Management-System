@@ -88,13 +88,18 @@ public class ServiceManager {
 
         if (option == 1 && !facultyMembers.isEmpty()) {
             for( Faculty faculty : facultyMembers) {
-                System.out.println("[" + faculty.toString() + "]");
+                System.out.println("----- Faculty Members -----");
+                System.out.println(faculty.toString());
+                System.out.println("---------------------------");
             }
-        } else {
+        } else if (option == 2 && !students.isEmpty()){
            for (Student student : students) {
-               System.out.println("[" + student.toString() + "]");
+               System.out.println("----- Students ------");
+               System.out.println(student.toString());
+               System.out.println("---------------------");
            }
+        } else {
+            System.out.println("List is Empty.");
         }
-        System.out.println("List is Empty.");
     }
 }

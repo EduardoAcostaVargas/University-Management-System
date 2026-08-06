@@ -1,10 +1,5 @@
 package Staff;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.SplittableRandom;
-
 public class Faculty {
     String facultyRole;
     String firstName;
@@ -17,6 +12,11 @@ public class Faculty {
         this.lastName = lastName;
         this.facultyEmail = facultyEmail;
 
+    }
+
+    @Override
+    public String toString(){
+        return "[" + firstName + ", " + lastName + "]";
     }
 
 }

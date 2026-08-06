@@ -11,4 +11,9 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
     }
+
+    @Override
+    public String toString(){
+        return "[" + firstName + ", " + lastName + "]";
+    }
 }
