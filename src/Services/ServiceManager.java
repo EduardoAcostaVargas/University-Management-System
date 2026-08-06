@@ -20,9 +20,10 @@ public class ServiceManager {
             System.out.println("----- University Management System -----");
             System.out.println("1) Add New Member");
             System.out.println("2) See Members");
-            System.out.println("3) Exit");
+            System.out.println("3) Remove Member");
+            System.out.println("4) Exit");
 
-            System.out.print("Enter an option 1-3: ");
+            System.out.print("Enter an option 1-4: ");
             int option = scanner.nextInt();
             scanner.nextLine();
 
@@ -34,6 +35,9 @@ public class ServiceManager {
                     seeMembers();
                     break;
                 case 3:
+                    removeMember();
+                    break;
+                case 4:
                     System.out.println("Exiting System, Good Bye.");
                     isRunning = false;
                     break;
@@ -44,28 +48,32 @@ public class ServiceManager {
         scanner.close();
     }
 
-    private static void addNewMember(){
+    private static void addNewMember() {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("---------- New Member ----------");
 
+        System.out.print("Enter New Member ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
         System.out.print("Enter New Member Role e.g.(Professor, Student, Clerk): ");
         String facultyRole = scanner.nextLine();
 
-        System.out.print("Enter Name: ");
+        System.out.print("Enter First Name: ");
         String firstName = scanner.nextLine();
 
         System.out.print("Enter Last Name: ");
         String lastName = scanner.nextLine();
 
-        System.out.print("Enter email: ");
+        System.out.print("Enter Email: ");
         String email = scanner.nextLine();
 
-        if (!facultyRole.equalsIgnoreCase("Student")){
-            Faculty newFaculty = new Faculty(facultyRole, firstName, lastName, email);
+        if (!facultyRole.equalsIgnoreCase("Student")) {
+            Faculty newFaculty = new Faculty(id, facultyRole, firstName, lastName, email);
             facultyMembers.add(newFaculty);
         } else {
-            Student newStudent = new Student(firstName, lastName, email);
+            Student newStudent = new Student(id, firstName, lastName, email);
             students.add(newStudent);
         }
 
@@ -87,19 +95,50 @@ public class ServiceManager {
         scanner.nextLine();
 
         if (option == 1 && !facultyMembers.isEmpty()) {
-            for( Faculty faculty : facultyMembers) {
-                System.out.println("----- Faculty Members -----");
+            System.out.println("----- Faculty Members -----");
+
+            for (Faculty faculty : facultyMembers) {
                 System.out.println(faculty.toString());
-                System.out.println("---------------------------");
             }
-        } else if (option == 2 && !students.isEmpty()){
-           for (Student student : students) {
-               System.out.println("----- Students ------");
-               System.out.println(student.toString());
-               System.out.println("---------------------");
-           }
+
+        } else if (option == 2 && !students.isEmpty()) {
+            System.out.println("----- Students ------");
+
+            for (Student student : students) {
+                System.out.println(student.toString());
+            }
+
         } else {
             System.out.println("List is Empty.");
         }
+    }
+
+    private static void removeMember() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("What member would you like to remove?");
+        System.out.println("1) Faculty");
+        System.out.println("2) Student");
+        System.out.print("Select an Option 1-2: ");
+
+        int option = scanner.nextInt();
+        scanner.nextLine();
+
+        if (option == 1) {
+            System.out.print("Enter Member ID: ");
+            int userToDeleteID = scanner.nextInt();
+            scanner.nextLine();
+            facultyMembers.removeIf(faculty -> faculty.getId() == userToDeleteID);
+
+        } else if (option == 2) {
+            System.out.print("Enter Member ID: ");
+            int userToDeleteID = scanner.nextInt();
+            scanner.nextLine();
+            students.removeIf(student -> student.getId() == userToDeleteID);
+        } else {
+            System.out.println("Member not found.");
+        }
+        System.out.println("Member deleted successfully.");
+
     }
 }
