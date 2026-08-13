@@ -58,7 +58,7 @@ public class ServiceManager {
         scanner.nextLine();
 
         System.out.print("Enter New Member Role e.g.(Professor, Student, Clerk): ");
-        String facultyRole = scanner.nextLine();
+        String memberRole = scanner.nextLine();
 
         System.out.print("Enter First Name: ");
         String firstName = scanner.nextLine();
@@ -69,8 +69,8 @@ public class ServiceManager {
         System.out.print("Enter Email: ");
         String email = scanner.nextLine();
 
-        if (!facultyRole.equalsIgnoreCase("Student")) {
-            Faculty newFaculty = new Faculty(id, facultyRole, firstName, lastName, email);
+        if (!memberRole.equalsIgnoreCase("Student")) {
+            Faculty newFaculty = new Faculty(id, memberRole, firstName, lastName, email);
             facultyMembers.add(newFaculty);
         } else {
             Student newStudent = new Student(id, firstName, lastName, email);
@@ -79,7 +79,7 @@ public class ServiceManager {
 
 
         System.out.println("---------- New Member Added Successfully ----------");
-        System.out.println("[Role: " + facultyRole + ", Name: " + firstName + " " + lastName + "]");
+        System.out.println("[Role: " + memberRole + ", Name: " + firstName + " " + lastName + "]");
         System.out.println("---------------------------------------------------");
     }
 
