@@ -1,5 +1,6 @@
 package Services;
 
+import Courses.Course;
 import Staff.Faculty;
 import Students.Student;
 
@@ -8,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ServiceManager {
-    private static ArrayList<Faculty> facultyMembers = new ArrayList<>();
-    private static ArrayList<Student> students = new ArrayList<>();
+    private static final ArrayList<Faculty> facultyMembers = new ArrayList<>();
+    private static final ArrayList<Student> students = new ArrayList<>();
+    private static final ArrayList<Course> coursesOffered = new ArrayList<>();
 
 
     public static void run() {
@@ -21,9 +23,10 @@ public class ServiceManager {
             System.out.println("1) Add New Member");
             System.out.println("2) See Members");
             System.out.println("3) Remove Member");
-            System.out.println("4) Exit");
+            System.out.println("4) Add Course");
+            System.out.println("5) Exit");
 
-            System.out.print("Enter an option 1-4: ");
+            System.out.print("Enter an option 1-5: ");
             int option = scanner.nextInt();
             scanner.nextLine();
 
@@ -38,6 +41,9 @@ public class ServiceManager {
                     removeMember();
                     break;
                 case 4:
+                    addCourse();
+                    break;
+                case 5:
                     System.out.println("Exiting System, Good Bye.");
                     isRunning = false;
                     break;
@@ -140,5 +146,36 @@ public class ServiceManager {
         }
         System.out.println("Member deleted successfully.");
 
+    }
+
+    private static void addCourse() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("---------- New Course ----------");
+
+        System.out.print("Enter course code: ");
+        String courseCode = sc.nextLine();
+
+        System.out.print("Enter course name: ");
+        String courseName = sc.nextLine();
+
+        System.out.print("Enter course section: ");
+        String courseSection = sc.nextLine();
+
+        System.out.print("Enter amount of course credits: ");
+        int courseCredits = sc.nextInt();
+        sc.nextLine();
+
+        Course newCourse = new Course(courseCode, courseName, courseSection, courseCredits);
+        coursesOffered.add(newCourse);
+
+        System.out.println("---------- Course ----------");
+        System.out.println(
+                "Course code: " + courseCode +
+                "\nCourse name: " + courseName +
+                "\nCourse credits: " + courseCredits
+        );
+        System.out.println("Course added successfully.");
+        System.out.println("----------------------------");
     }
 }
