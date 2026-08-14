@@ -20,38 +20,64 @@ public class ServiceManager {
 
         while (isRunning) {
             System.out.println("----- University Management System -----");
-            System.out.println("1) Add New Member");
-            System.out.println("2) See Members");
-            System.out.println("3) Remove Member");
-            System.out.println("4) Add Course");
-            System.out.println("5) Exit");
+            System.out.println("1. Members Menu");
+            System.out.println("2. Courses Menu");
+            System.out.println("3. Close System");
 
-            System.out.print("Enter an option 1-5: ");
-            int option = scanner.nextInt();
+            System.out.print("Select an Option 1-3: ");
+            int menuChoice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (option) {
+
+            switch (menuChoice) {
                 case 1:
-                    addNewMember();
+                    membersMenu();
                     break;
                 case 2:
-                    seeMembers();
+                    coursesMenu();
                     break;
                 case 3:
-                    removeMember();
-                    break;
-                case 4:
-                    addCourse();
-                    break;
-                case 5:
-                    System.out.println("Exiting System, Good Bye.");
+                    System.out.println("Shutting the System Down, Good Bye.");
                     isRunning = false;
                     break;
-
+                default:
+                    System.out.println("Invalid option, choose an option between 1-3.");
+                    break;
             }
         }
 
         scanner.close();
+    }
+
+    //MEMBERS METHODS
+    private static void membersMenu() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("---------- Members Menu ----------");
+        System.out.println("1. Add Member");
+        System.out.println("2. View Members");
+        System.out.println("3. Remove Member");
+        System.out.println("4. Main Menu");
+
+        System.out.print("Enter an option 1-4: ");
+        int option = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (option) {
+            case 1:
+                addNewMember();
+                break;
+            case 2:
+                seeMembers();
+                break;
+            case 3:
+                removeMember();
+                break;
+            case 4:
+                System.out.println("Exiting System, Good Bye.");
+
+        }
+
     }
 
     private static void addNewMember() {
@@ -148,6 +174,28 @@ public class ServiceManager {
 
     }
 
+    //COURSES METHODS
+    private static void coursesMenu() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("---------- Courses Menu ----------");
+        System.out.println("1. Add Course");
+        System.out.println("2. Main Menu");
+
+        int option = scanner.nextInt();
+        scanner.nextLine();
+
+
+        switch (option) {
+            case 1:
+                addCourse();
+                break;
+            case 2:
+                System.out.println("Returning to Main Menu");
+                break;
+        }
+    }
+
     private static void addCourse() {
         Scanner sc = new Scanner(System.in);
 
@@ -172,8 +220,8 @@ public class ServiceManager {
         System.out.println("---------- Course ----------");
         System.out.println(
                 "Course code: " + courseCode +
-                "\nCourse name: " + courseName +
-                "\nCourse credits: " + courseCredits
+                        "\nCourse name: " + courseName +
+                        "\nCourse credits: " + courseCredits
         );
         System.out.println("Course added successfully.");
         System.out.println("----------------------------");
