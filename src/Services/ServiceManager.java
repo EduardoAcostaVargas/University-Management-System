@@ -6,6 +6,7 @@ import Students.Student;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ServiceManager {
@@ -181,7 +182,8 @@ public class ServiceManager {
         System.out.println("---------- Courses Menu ----------");
         System.out.println("1. Add Course");
         System.out.println("2. View Courses");
-        System.out.println("3. Main Menu");
+        System.out.println("3. Delete Course");
+        System.out.println("4. Main Menu");
 
         int option = scanner.nextInt();
         scanner.nextLine();
@@ -195,6 +197,9 @@ public class ServiceManager {
                 viewAllCourses();
                 break;
             case 3:
+                removeCourse();
+                break;
+            case 4:
                 System.out.println("Returning to Main Menu");
                 break;
         }
@@ -240,6 +245,19 @@ public class ServiceManager {
             }
         } else {
             System.out.println("There are any available courses at this moment.");
+        }
+    }
+
+    private static void removeCourse() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter Course Code e.g.(CWEB1234, CNTS 1343): ");
+        String courseToDeleteCode = scanner.nextLine();
+
+        if (!coursesOffered.isEmpty()) {
+            coursesOffered.removeIf(course -> Objects.equals(course.getCourseCode(), courseToDeleteCode));
+        } else {
+            System.out.println("Course not found.");
         }
     }
 }

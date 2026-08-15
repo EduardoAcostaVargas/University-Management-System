@@ -17,4 +17,8 @@ public class Course {
     public String toString(){
         return "Course Code: " + courseCode + ", Course Name: " + courseName;
     }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
 }
