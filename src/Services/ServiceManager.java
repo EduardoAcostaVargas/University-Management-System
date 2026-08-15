@@ -14,9 +14,10 @@ public class ServiceManager {
     private static final ArrayList<Student> students = new ArrayList<>();
     private static final ArrayList<Course> coursesOffered = new ArrayList<>();
 
+    private static final Scanner scanner = new Scanner(System.in);
+
 
     public static void run() {
-        Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
         while (isRunning) {
@@ -46,14 +47,10 @@ public class ServiceManager {
                     break;
             }
         }
-
-        scanner.close();
     }
 
     //MEMBERS METHODS
     private static void membersMenu() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("---------- Members Menu ----------");
         System.out.println("1. Add Member");
         System.out.println("2. View Members");
@@ -69,7 +66,7 @@ public class ServiceManager {
                 addNewMember();
                 break;
             case 2:
-                seeMembers();
+                viewMembers();
                 break;
             case 3:
                 removeMember();
@@ -82,8 +79,6 @@ public class ServiceManager {
     }
 
     private static void addNewMember() {
-
-        Scanner scanner = new Scanner(System.in);
         System.out.println("---------- New Member ----------");
 
         System.out.print("Enter New Member ID: ");
@@ -116,9 +111,7 @@ public class ServiceManager {
         System.out.println("---------------------------------------------------");
     }
 
-    private static void seeMembers() {
-        Scanner scanner = new Scanner(System.in);
-
+    private static void viewMembers() {
         System.out.println("What members do you like to see?");
         System.out.println("1) Faculty");
         System.out.println("2) Students");
@@ -147,8 +140,6 @@ public class ServiceManager {
     }
 
     private static void removeMember() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("What member would you like to remove?");
         System.out.println("1) Faculty");
         System.out.println("2) Student");
@@ -157,28 +148,31 @@ public class ServiceManager {
         int option = scanner.nextInt();
         scanner.nextLine();
 
+        System.out.print("Enter Member ID: ");
+        int userToDeleteID = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean removed;
+
         if (option == 1) {
-            System.out.print("Enter Member ID: ");
-            int userToDeleteID = scanner.nextInt();
-            scanner.nextLine();
-            facultyMembers.removeIf(faculty -> faculty.getId() == userToDeleteID);
+            removed = facultyMembers.removeIf(faculty -> faculty.getId() == userToDeleteID );
 
         } else if (option == 2) {
-            System.out.print("Enter Member ID: ");
-            int userToDeleteID = scanner.nextInt();
-            scanner.nextLine();
-            students.removeIf(student -> student.getId() == userToDeleteID);
+            removed = students.removeIf(student -> student.getId() == userToDeleteID);
         } else {
-            System.out.println("Member not found.");
+            System.out.println("Invalid option, please select an option from 1-2.");
+            return;
         }
-        System.out.println("Member deleted successfully.");
 
+        if (removed) {
+            System.out.println("User deleted successfully.");
+        } else {
+            System.out.println("User with ID: " + userToDeleteID + " not found.");
+        }
     }
 
     //COURSES METHODS
     private static void coursesMenu() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("---------- Courses Menu ----------");
         System.out.println("1. Add Course");
         System.out.println("2. View Courses");
@@ -206,22 +200,20 @@ public class ServiceManager {
     }
 
     private static void addCourse() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("---------- New Course ----------");
 
         System.out.print("Enter course code: ");
-        String courseCode = sc.nextLine();
+        String courseCode = scanner.nextLine();
 
         System.out.print("Enter course name: ");
-        String courseName = sc.nextLine();
+        String courseName = scanner.nextLine();
 
         System.out.print("Enter course section: ");
-        String courseSection = sc.nextLine();
+        String courseSection = scanner.nextLine();
 
         System.out.print("Enter amount of course credits: ");
-        int courseCredits = sc.nextInt();
-        sc.nextLine();
+        int courseCredits = scanner.nextInt();
+        scanner.nextLine();
 
         Course newCourse = new Course(courseCode, courseName, courseSection, courseCredits);
         coursesOffered.add(newCourse);
@@ -249,8 +241,6 @@ public class ServiceManager {
     }
 
     private static void removeCourse() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.print("Enter Course Code e.g.(CWEB1234, CNTS 1343): ");
         String courseToDeleteCode = scanner.nextLine();
 
