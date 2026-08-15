@@ -180,7 +180,8 @@ public class ServiceManager {
 
         System.out.println("---------- Courses Menu ----------");
         System.out.println("1. Add Course");
-        System.out.println("2. Main Menu");
+        System.out.println("2. View Courses");
+        System.out.println("3. Main Menu");
 
         int option = scanner.nextInt();
         scanner.nextLine();
@@ -191,6 +192,9 @@ public class ServiceManager {
                 addCourse();
                 break;
             case 2:
+                viewAllCourses();
+                break;
+            case 3:
                 System.out.println("Returning to Main Menu");
                 break;
         }
@@ -225,5 +229,17 @@ public class ServiceManager {
         );
         System.out.println("Course added successfully.");
         System.out.println("----------------------------");
+    }
+
+    private static void viewAllCourses() {
+
+        if (!coursesOffered.isEmpty()) {
+            System.out.println("---------- Courses ----------");
+            for (Course course : coursesOffered) {
+                System.out.println(course.toString());
+            }
+        } else {
+            System.out.println("There are any available courses at this moment.");
+        }
     }
 }

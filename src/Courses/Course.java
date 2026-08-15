@@ -12,4 +12,9 @@ public class Course {
         this.courseSection = courseSection;
         this.courseCredits = courseCredits;
     }
+
+    @Override
+    public String toString(){
+        return "Course Code: " + courseCode + ", Course Name: " + courseName;
+    }
 }
