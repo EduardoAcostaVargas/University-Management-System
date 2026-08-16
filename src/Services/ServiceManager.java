@@ -6,6 +6,7 @@ import Students.Student;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ServiceManager {
@@ -13,50 +14,71 @@ public class ServiceManager {
     private static final ArrayList<Student> students = new ArrayList<>();
     private static final ArrayList<Course> coursesOffered = new ArrayList<>();
 
+    private static final Scanner scanner = new Scanner(System.in);
+
 
     public static void run() {
-        Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
         while (isRunning) {
             System.out.println("----- University Management System -----");
-            System.out.println("1) Add New Member");
-            System.out.println("2) See Members");
-            System.out.println("3) Remove Member");
-            System.out.println("4) Add Course");
-            System.out.println("5) Exit");
+            System.out.println("1. Members Menu");
+            System.out.println("2. Courses Menu");
+            System.out.println("3. Close System");
 
-            System.out.print("Enter an option 1-5: ");
-            int option = scanner.nextInt();
+            System.out.print("Select an Option 1-3: ");
+            int menuChoice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (option) {
+
+            switch (menuChoice) {
                 case 1:
-                    addNewMember();
+                    membersMenu();
                     break;
                 case 2:
-                    seeMembers();
+                    coursesMenu();
                     break;
                 case 3:
-                    removeMember();
-                    break;
-                case 4:
-                    addCourse();
-                    break;
-                case 5:
-                    System.out.println("Exiting System, Good Bye.");
+                    System.out.println("Shutting the System Down, Good Bye.");
                     isRunning = false;
                     break;
-
+                default:
+                    System.out.println("Invalid option, choose an option between 1-3.");
+                    break;
             }
         }
+    }
 
-        scanner.close();
+    //MEMBERS METHODS
+    private static void membersMenu() {
+        System.out.println("---------- Members Menu ----------");
+        System.out.println("1. Add Member");
+        System.out.println("2. View Members");
+        System.out.println("3. Remove Member");
+        System.out.println("4. Main Menu");
+
+        System.out.print("Enter an option 1-4: ");
+        int option = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (option) {
+            case 1:
+                addNewMember();
+                break;
+            case 2:
+                viewMembers();
+                break;
+            case 3:
+                removeMember();
+                break;
+            case 4:
+                System.out.println("Exiting System, Good Bye.");
+
+        }
+
     }
 
     private static void addNewMember() {
-
-        Scanner scanner = new Scanner(System.in);
         System.out.println("---------- New Member ----------");
 
         System.out.print("Enter New Member ID: ");
@@ -89,9 +111,7 @@ public class ServiceManager {
         System.out.println("---------------------------------------------------");
     }
 
-    private static void seeMembers() {
-        Scanner scanner = new Scanner(System.in);
-
+    private static void viewMembers() {
         System.out.println("What members do you like to see?");
         System.out.println("1) Faculty");
         System.out.println("2) Students");
@@ -120,8 +140,6 @@ public class ServiceManager {
     }
 
     private static void removeMember() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("What member would you like to remove?");
         System.out.println("1) Faculty");
         System.out.println("2) Student");
@@ -130,41 +148,72 @@ public class ServiceManager {
         int option = scanner.nextInt();
         scanner.nextLine();
 
+        System.out.print("Enter Member ID: ");
+        int userToDeleteID = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean removed;
+
         if (option == 1) {
-            System.out.print("Enter Member ID: ");
-            int userToDeleteID = scanner.nextInt();
-            scanner.nextLine();
-            facultyMembers.removeIf(faculty -> faculty.getId() == userToDeleteID);
+            removed = facultyMembers.removeIf(faculty -> faculty.getId() == userToDeleteID );
 
         } else if (option == 2) {
-            System.out.print("Enter Member ID: ");
-            int userToDeleteID = scanner.nextInt();
-            scanner.nextLine();
-            students.removeIf(student -> student.getId() == userToDeleteID);
+            removed = students.removeIf(student -> student.getId() == userToDeleteID);
         } else {
-            System.out.println("Member not found.");
+            System.out.println("Invalid option, please select an option from 1-2.");
+            return;
         }
-        System.out.println("Member deleted successfully.");
 
+        if (removed) {
+            System.out.println("User deleted successfully.");
+        } else {
+            System.out.println("User with ID: " + userToDeleteID + " not found.");
+        }
+    }
+
+    //COURSES METHODS
+    private static void coursesMenu() {
+        System.out.println("---------- Courses Menu ----------");
+        System.out.println("1. Add Course");
+        System.out.println("2. View Courses");
+        System.out.println("3. Delete Course");
+        System.out.println("4. Main Menu");
+
+        int option = scanner.nextInt();
+        scanner.nextLine();
+
+
+        switch (option) {
+            case 1:
+                addCourse();
+                break;
+            case 2:
+                viewAllCourses();
+                break;
+            case 3:
+                removeCourse();
+                break;
+            case 4:
+                System.out.println("Returning to Main Menu");
+                break;
+        }
     }
 
     private static void addCourse() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("---------- New Course ----------");
 
         System.out.print("Enter course code: ");
-        String courseCode = sc.nextLine();
+        String courseCode = scanner.nextLine();
 
         System.out.print("Enter course name: ");
-        String courseName = sc.nextLine();
+        String courseName = scanner.nextLine();
 
         System.out.print("Enter course section: ");
-        String courseSection = sc.nextLine();
+        String courseSection = scanner.nextLine();
 
         System.out.print("Enter amount of course credits: ");
-        int courseCredits = sc.nextInt();
-        sc.nextLine();
+        int courseCredits = scanner.nextInt();
+        scanner.nextLine();
 
         Course newCourse = new Course(courseCode, courseName, courseSection, courseCredits);
         coursesOffered.add(newCourse);
@@ -172,10 +221,33 @@ public class ServiceManager {
         System.out.println("---------- Course ----------");
         System.out.println(
                 "Course code: " + courseCode +
-                "\nCourse name: " + courseName +
-                "\nCourse credits: " + courseCredits
+                        "\nCourse name: " + courseName +
+                        "\nCourse credits: " + courseCredits
         );
         System.out.println("Course added successfully.");
         System.out.println("----------------------------");
+    }
+
+    private static void viewAllCourses() {
+
+        if (!coursesOffered.isEmpty()) {
+            System.out.println("---------- Courses ----------");
+            for (Course course : coursesOffered) {
+                System.out.println(course.toString());
+            }
+        } else {
+            System.out.println("There are any available courses at this moment.");
+        }
+    }
+
+    private static void removeCourse() {
+        System.out.print("Enter Course Code e.g.(CWEB1234, CNTS 1343): ");
+        String courseToDeleteCode = scanner.nextLine();
+
+        if (!coursesOffered.isEmpty()) {
+            coursesOffered.removeIf(course -> Objects.equals(course.getCourseCode(), courseToDeleteCode));
+        } else {
+            System.out.println("Course not found.");
+        }
     }
 }
