@@ -135,7 +135,7 @@ public class ServiceManager {
             }
 
         } else {
-            System.out.println("List is Empty.");
+            System.out.println("Invalid option, please select 1-2.");
         }
     }
 
@@ -160,14 +160,14 @@ public class ServiceManager {
         } else if (option == 2) {
             removed = students.removeIf(student -> student.getId() == userToDeleteID);
         } else {
-            System.out.println("Invalid option, please select an option from 1-2.");
+            System.out.println("Invalid option, please select 1-2.");
             return;
         }
 
         if (removed) {
-            System.out.println("User deleted successfully.");
+            System.out.println("Member deleted successfully.");
         } else {
-            System.out.println("User with ID: " + userToDeleteID + " not found.");
+            System.out.println("Member with ID: " + userToDeleteID + " not found.");
         }
     }
 
@@ -236,7 +236,7 @@ public class ServiceManager {
                 System.out.println(course.toString());
             }
         } else {
-            System.out.println("There are any available courses at this moment.");
+            System.out.println("No available courses at this moment.");
         }
     }
 
@@ -244,10 +244,16 @@ public class ServiceManager {
         System.out.print("Enter Course Code e.g.(CWEB1234, CNTS 1343): ");
         String courseToDeleteCode = scanner.nextLine();
 
+        boolean removed = false;
+
         if (!coursesOffered.isEmpty()) {
-            coursesOffered.removeIf(course -> Objects.equals(course.getCourseCode(), courseToDeleteCode));
+            removed = coursesOffered.removeIf(course -> Objects.equals(course.getCourseCode(), courseToDeleteCode));
+        }
+
+        if (removed) {
+            System.out.println("Course deleted successfully.");
         } else {
-            System.out.println("Course not found.");
+            System.out.println("Course with code: " + courseToDeleteCode + " not found.");
         }
     }
 }
