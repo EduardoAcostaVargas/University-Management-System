@@ -1,11 +1,15 @@
 package Staff;
 
 public class Faculty {
-    final int id;
+    private int id;
     String facultyRole;
     String firstName;
     String lastName;
     String facultyEmail;
+
+    public Faculty() {
+
+    }
 
     public Faculty(int id, String facultyRole, String firstName, String lastName, String facultyEmail) {
         this.id = id;
@@ -17,11 +21,47 @@ public class Faculty {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[" + firstName + ", " + lastName + "]";
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getFacultyRole() {
+        return facultyRole;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFacultyEmail() {
+        return facultyEmail;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFacultyRole(String facultyRole) {
+        this.facultyRole = facultyRole;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFacultyEmail(String facultyEmail) {
+        this.facultyEmail = facultyEmail;
     }
 }

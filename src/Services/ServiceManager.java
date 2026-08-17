@@ -1,24 +1,31 @@
 package Services;
 
 import Courses.Course;
+import Persistence.DataStore;
+import Persistence.PersistenceManager;
 import Staff.Faculty;
 import Students.Student;
 
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class ServiceManager {
-    private static final ArrayList<Faculty> facultyMembers = new ArrayList<>();
-    private static final ArrayList<Student> students = new ArrayList<>();
-    private static final ArrayList<Course> coursesOffered = new ArrayList<>();
+    private static List<Faculty> facultyMembers;
+    private static List<Student> students;
+    private static List<Course> coursesOffered;
 
     private static final Scanner scanner = new Scanner(System.in);
 
 
     public static void run() {
         boolean isRunning = true;
+
+        DataStore dataStore = PersistenceManager.loadData();
+        facultyMembers = dataStore.getFacultyMembers();
+        students = dataStore.getStudents();
+        coursesOffered = dataStore.getCoursesOffered();
 
         while (isRunning) {
             System.out.println("----- University Management System -----");
@@ -39,6 +46,11 @@ public class ServiceManager {
                     coursesMenu();
                     break;
                 case 3:
+                    DataStore saveData = new DataStore();
+                    saveData.setFacultyMembers(facultyMembers);
+                    saveData.setStudents(students);
+                    saveData.setCoursesOffered(coursesOffered);
+                    PersistenceManager.saveData(saveData);
                     System.out.println("Shutting the System Down, Good Bye.");
                     isRunning = false;
                     break;
@@ -120,22 +132,32 @@ public class ServiceManager {
         int option = scanner.nextInt();
         scanner.nextLine();
 
-        if (option == 1 && !facultyMembers.isEmpty()) {
-            System.out.println("----- Faculty Members -----");
+        if (option == 1) {
 
-            for (Faculty faculty : facultyMembers) {
-                System.out.println(faculty.toString());
+            if (!facultyMembers.isEmpty()) {
+                System.out.println("----- Faculty Members -----");
+
+                for (Faculty faculty : facultyMembers) {
+                    System.out.println(faculty.toString());
+                }
+            } else {
+                System.out.println("List is Empty.");
             }
 
-        } else if (option == 2 && !students.isEmpty()) {
-            System.out.println("----- Students ------");
+        } else if (option == 2) {
 
-            for (Student student : students) {
-                System.out.println(student.toString());
+            if (!students.isEmpty()) {
+                System.out.println("----- Students ------");
+
+                for (Student student : students) {
+                    System.out.println(student.toString());
+                }
+            } else {
+                System.out.println("List is Empty.");
             }
 
         } else {
-            System.out.println("List is Empty.");
+            System.out.println("Invalid option, please select 1-2.");
         }
     }
 
@@ -160,14 +182,14 @@ public class ServiceManager {
         } else if (option == 2) {
             removed = students.removeIf(student -> student.getId() == userToDeleteID);
         } else {
-            System.out.println("Invalid option, please select an option from 1-2.");
+            System.out.println("Invalid option, please select 1-2.");
             return;
         }
 
         if (removed) {
-            System.out.println("User deleted successfully.");
+            System.out.println("Member deleted successfully.");
         } else {
-            System.out.println("User with ID: " + userToDeleteID + " not found.");
+            System.out.println("Member with ID: " + userToDeleteID + " not found.");
         }
     }
 
@@ -236,7 +258,7 @@ public class ServiceManager {
                 System.out.println(course.toString());
             }
         } else {
-            System.out.println("There are any available courses at this moment.");
+            System.out.println("No available courses at this moment.");
         }
     }
 
@@ -244,10 +266,16 @@ public class ServiceManager {
         System.out.print("Enter Course Code e.g.(CWEB1234, CNTS 1343): ");
         String courseToDeleteCode = scanner.nextLine();
 
+        boolean removed = false;
+
         if (!coursesOffered.isEmpty()) {
-            coursesOffered.removeIf(course -> Objects.equals(course.getCourseCode(), courseToDeleteCode));
+            removed = coursesOffered.removeIf(course -> Objects.equals(course.getCourseCode(), courseToDeleteCode));
+        }
+
+        if (removed) {
+            System.out.println("Course deleted successfully.");
         } else {
-            System.out.println("Course not found.");
+            System.out.println("Course with code: " + courseToDeleteCode + " not found.");
         }
     }
 }

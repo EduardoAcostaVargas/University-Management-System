@@ -1,5 +1,7 @@
 import static Services.ServiceManager.run;
 
-void main() {
-    run();
+public class Main {
+    void main() {
+        run();
+    }
 }
