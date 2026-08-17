@@ -1,24 +1,31 @@
 package Services;
 
 import Courses.Course;
+import Persistence.DataStore;
+import Persistence.PersistenceManager;
 import Staff.Faculty;
 import Students.Student;
 
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class ServiceManager {
-    private static final ArrayList<Faculty> facultyMembers = new ArrayList<>();
-    private static final ArrayList<Student> students = new ArrayList<>();
-    private static final ArrayList<Course> coursesOffered = new ArrayList<>();
+    private static List<Faculty> facultyMembers;
+    private static List<Student> students;
+    private static List<Course> coursesOffered;
 
     private static final Scanner scanner = new Scanner(System.in);
 
 
     public static void run() {
         boolean isRunning = true;
+
+        DataStore dataStore = PersistenceManager.loadData();
+        facultyMembers = dataStore.getFacultyMembers();
+        students = dataStore.getStudents();
+        coursesOffered = dataStore.getCoursesOffered();
 
         while (isRunning) {
             System.out.println("----- University Management System -----");
@@ -39,6 +46,11 @@ public class ServiceManager {
                     coursesMenu();
                     break;
                 case 3:
+                    DataStore saveData = new DataStore();
+                    saveData.setFacultyMembers(facultyMembers);
+                    saveData.setStudents(students);
+                    saveData.setCoursesOffered(coursesOffered);
+                    PersistenceManager.saveData(saveData);
                     System.out.println("Shutting the System Down, Good Bye.");
                     isRunning = false;
                     break;

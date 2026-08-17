@@ -7,6 +7,10 @@ public class Faculty {
     String lastName;
     String facultyEmail;
 
+    public Faculty() {
+
+    }
+
     public Faculty(int id, String facultyRole, String firstName, String lastName, String facultyEmail) {
         this.id = id;
         this.facultyRole = facultyRole;
@@ -39,5 +43,25 @@ public class Faculty {
 
     public String getFacultyEmail() {
         return facultyEmail;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFacultyRole(String facultyRole) {
+        this.facultyRole = facultyRole;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFacultyEmail(String facultyEmail) {
+        this.facultyEmail = facultyEmail;
     }
 }

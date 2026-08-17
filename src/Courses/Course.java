@@ -6,6 +6,10 @@ public class Course {
     private String courseSection;
     private int courseCredits;
 
+    public Course() {
+
+    }
+
     public Course(String courseCode, String courseName, String courseSection, int courseCredits){
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -32,5 +36,21 @@ public class Course {
 
     public int getCourseCredits() {
         return courseCredits;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public void setCourseSection(String courseSection) {
+        this.courseSection = courseSection;
+    }
+
+    public void setCourseCredits(int courseCredits) {
+        this.courseCredits = courseCredits;
     }
 }
