@@ -1,10 +1,10 @@
 package Courses;
 
 public class Course {
-    String courseCode;
-    String courseName;
-    String courseSection;
-    int courseCredits;
+    private String courseCode;
+    private String courseName;
+    private String courseSection;
+    private int courseCredits;
 
     public Course(String courseCode, String courseName, String courseSection, int courseCredits){
         this.courseCode = courseCode;
@@ -20,5 +20,17 @@ public class Course {
 
     public String getCourseCode() {
         return courseCode;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public String getCourseSection() {
+        return courseSection;
+    }
+
+    public int getCourseCredits() {
+        return courseCredits;
     }
 }

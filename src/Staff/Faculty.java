@@ -1,7 +1,7 @@
 package Staff;
 
 public class Faculty {
-    final int id;
+    private int id;
     String facultyRole;
     String firstName;
     String lastName;
@@ -17,11 +17,27 @@ public class Faculty {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[" + firstName + ", " + lastName + "]";
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getFacultyRole() {
+        return facultyRole;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFacultyEmail() {
+        return facultyEmail;
     }
 }
